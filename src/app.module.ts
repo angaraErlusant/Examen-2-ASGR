@@ -1,18 +1,23 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoriasModule } from './categorias/categorias.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
+import { ProductosModule } from './productos/productos.module';
+import { ClientesModule } from './clientes/clientes.module';
 import { FacturasModule } from './facturas/facturas.module';
 import { VentasModule } from './ventas/ventas.module';
-import { FacturasModule } from './facturas/facturas.module';
-import { ClientesModule } from './clientes/clientes.module';
-import { ProductosModule } from './productos/productos.module';
-import { ProveedoresModule } from './proveedores/proveedores.module';
-import { CategoriasModule } from './categorias/categorias.module';
+
 import { User } from './users/entities/user.entity';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { Categoria } from './ventas/entities/categoria.entity';
+import { Proveedor } from './ventas/entities/proveedor.entity';
+import { Producto } from './ventas/entities/producto.entity';
+import { Cliente } from './ventas/entities/cliente.entity';
+import { Factura } from './ventas/entities/factura.entity';
+import { Venta } from './ventas/entities/venta.entity';
 
 @Module({
   imports: [
@@ -27,8 +32,8 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User],
-        synchronize: true, // crea las tablas
+        entities: [User, Categoria, Proveedor, Producto, Cliente, Factura, Venta],
+        synchronize: true,
       }),
     }),
     UsersModule,
@@ -38,7 +43,7 @@ import { AuthModule } from './auth/auth.module';
     ProductosModule,
     ClientesModule,
     FacturasModule,
-    VentasModule,
+    VentasModule, //
   ],
 })
 export class AppModule {}
