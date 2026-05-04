@@ -13,24 +13,31 @@ export class AuthService {
 
   async register(registerDto: RegisterDto) {
     const exists = await this.usersService.findByUsername(registerDto.username);
-    if (exists) throw new BadRequestException('El username ya está en uso');
+    if (exists) {
+      throw new BadRequestException('El nombre de usuario ya está en uso');
+    }
 
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
     const user = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
-      // El rol USER se asigna automáticamente por el default de la entidad
     });
 
     return { message: 'Usuario registrado exitosamente', id: user.id };
   }
 
-  async login(loginDto: LoginDto) {
+async login(loginDto: LoginDto) {
     const user = await this.usersService.findByUsername(loginDto.username);
-    if (!user) throw new UnauthorizedException('Credenciales inválidas');
+    
+    if (!user || !user.password) {
+      throw new UnauthorizedException('Credenciales inválidas');
+    }
 
     const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
-    if (!isPasswordValid) throw new UnauthorizedException('Credenciales inválidas');
+    
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Credenciales inválidas');
+    }
 
     const payload = { id: user.id, username: user.username, role: user.role };
     return {

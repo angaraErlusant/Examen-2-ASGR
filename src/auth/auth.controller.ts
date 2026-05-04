@@ -9,14 +9,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @ApiResponse({ status: 201, description: 'Usuario creado' })
-  @ApiResponse({ status: 400, description: 'Datos inválidos' })
+  @ApiResponse({ status: 201, description: 'Usuario creado correctamente' })
+  @ApiResponse({ status: 400, description: 'Datos inválidos o usuario duplicado' })
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
   @Post('login')
-  @ApiResponse({ status: 200, description: 'Login exitoso y retorna JWT' })
+  @ApiResponse({ status: 200, description: 'Login exitoso, retorna el JWT' })
   @ApiResponse({ status: 401, description: 'Credenciales inválidas' })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);

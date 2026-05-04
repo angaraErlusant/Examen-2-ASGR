@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards, Request, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Role } from './entities/user.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -13,6 +13,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+ 
   @Roles(Role.DEVELOPER)
   @Post()
   create(@Body() body: any) {
@@ -40,10 +41,11 @@ export class UsersController {
   @Get()
   findAll(@Request() req) {
     const user = req.user;
+    
     if (user.role === Role.ADMIN || user.role === Role.DEVELOPER) {
       return this.usersService.findAll();
     }
-    // Si es un USER es  normal entonces solo regresa su perfil en un arreglo
+    
     return this.usersService.findOne(user.id).then(res => [res]);
   }
 }

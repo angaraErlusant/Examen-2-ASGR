@@ -3,6 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { FacturasModule } from './facturas/facturas.module';
+import { VentasModule } from './ventas/ventas.module';
+import { FacturasModule } from './facturas/facturas.module';
+import { ClientesModule } from './clientes/clientes.module';
+import { ProductosModule } from './productos/productos.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
+import { CategoriasModule } from './categorias/categorias.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -26,6 +33,12 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    CategoriasModule,
+    ProveedoresModule,
+    ProductosModule,
+    ClientesModule,
+    FacturasModule,
+    VentasModule,
   ],
 })
 export class AppModule {}

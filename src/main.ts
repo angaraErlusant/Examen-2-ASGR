@@ -5,17 +5,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.enableCors();
-
+  app.enableCors(); 
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
   }));
 
   const config = new DocumentBuilder()
-    .setTitle('API de Usuarios')
-    .setDescription('Gestión de usuarios con roles y autenticación')
+    .setTitle('API de Usuarios y Ventas')
+    .setDescription('Gestión de usuarios y sistema relacional')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
